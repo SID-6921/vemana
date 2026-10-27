@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.venv/
+.DS_Store
+
+# Built test sets and scores (Telugu Wikipedia text is CC BY-SA; rebuild it with eval/build_te.py)
+*.parquet
+*.jsonl
+eval/cache/
+eval/raw/
+eval/runs/
+eval/te-*/

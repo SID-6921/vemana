@@ -1,0 +1,677 @@
+{
+ "model": "udgamlabs/Vemana-Base",
+ "benchmark": "Fresh Telugu text: bits per byte on new Telugu Wikipedia pages (lower is better)",
+ "measured": "2026-10-27",
+ "measured_by": "Udgam Labs",
+ "run": "release-1",
+ "scoring": {
+  "script": "eval/score.py",
+  "weights": "float32",
+  "matmul": "TF32",
+  "window_tokens": 1024,
+  "window_exceptions": {
+   "Goldfish Telugu 1000mb": 512
+  },
+  "stride": "half the window; every token scored once",
+  "bos": "first, when the model's tokenizer defines one"
+ },
+ "intervals": "95%, 4,000 page resamples, seed 0. gap = Vemana minus the model on the same resampled pages; negative means Vemana is better.",
+ "sets": {
+  "te-2026-10": {
+   "pages_created": [
+    "2026-09-01",
+    "2026-10-22"
+   ],
+   "role": "main test",
+   "pages": 416,
+   "bytes": 4476833,
+   "editors": 47,
+   "top_editor_pages": 150,
+   "models": {
+    "vemana": {
+     "label": "Vemana",
+     "params": "278.2M",
+     "pages": 416,
+     "bpb": 0.3606,
+     "bpb_ci95": [
+      0.3533,
+      0.3674
+     ],
+     "without_top_editor": {
+      "pages": 266,
+      "bpb": 0.3725
+     }
+    },
+    "nanochat-telugu-560M": {
+     "label": "nanochat-telugu-560M",
+     "params": "561M",
+     "pages": 416,
+     "bpb": 0.3831,
+     "bpb_ci95": [
+      0.3761,
+      0.3895
+     ],
+     "gap": -0.0224,
+     "gap_ci95": [
+      -0.0239,
+      -0.021
+     ],
+     "without_top_editor": {
+      "pages": 266,
+      "bpb": 0.396,
+      "gap": -0.0235,
+      "gap_ci95": [
+       -0.0258,
+       -0.0214
+      ]
+     }
+    },
+    "dhee-pravega-og-atom": {
+     "label": "Dhee-Pravega-OG Atom",
+     "params": "645.6M",
+     "pages": 416,
+     "bpb": 0.3929,
+     "bpb_ci95": [
+      0.3855,
+      0.3996
+     ],
+     "gap": -0.0322,
+     "gap_ci95": [
+      -0.0336,
+      -0.0309
+     ],
+     "without_top_editor": {
+      "pages": 266,
+      "bpb": 0.4077,
+      "gap": -0.0352,
+      "gap_ci95": [
+       -0.0373,
+       -0.0333
+      ]
+     }
+    },
+    "pothana-base-v2-225M": {
+     "label": "Pothana Base v2",
+     "params": "222M unique (370M unrolled)",
+     "pages": 416,
+     "bpb": 0.4404,
+     "bpb_ci95": [
+      0.4328,
+      0.4479
+     ],
+     "gap": -0.0798,
+     "gap_ci95": [
+      -0.0814,
+      -0.078
+     ],
+     "covered_text": {
+      "bpb": 0.4264,
+      "bpb_ci95": [
+       0.4188,
+       0.434
+      ],
+      "bytes_hidden_share": 0.0359,
+      "gap": -0.0657,
+      "gap_ci95": [
+       -0.0674,
+       -0.0641
+      ]
+     },
+     "without_top_editor": {
+      "pages": 266,
+      "bpb": 0.4553,
+      "gap": -0.0827,
+      "gap_ci95": [
+       -0.0848,
+       -0.0805
+      ]
+     }
+    },
+    "pothana-stage-a-plus-225M": {
+     "label": "Pothana stage-a-plus",
+     "params": "230M unique",
+     "pages": 416,
+     "bpb": 0.4504,
+     "bpb_ci95": [
+      0.4427,
+      0.4579
+     ],
+     "gap": -0.0898,
+     "gap_ci95": [
+      -0.0916,
+      -0.088
+     ],
+     "without_top_editor": {
+      "pages": 266,
+      "bpb": 0.4655,
+      "gap": -0.0929,
+      "gap_ci95": [
+       -0.0952,
+       -0.0905
+      ]
+     }
+    },
+    "goldfish-tel-telu-1000mb": {
+     "label": "Goldfish Telugu 1000mb",
+     "params": "125M",
+     "pages": 416,
+     "bpb": 0.4576,
+     "bpb_ci95": [
+      0.4501,
+      0.4647
+     ],
+     "gap": -0.0969,
+     "gap_ci95": [
+      -0.0993,
+      -0.0945
+     ],
+     "without_top_editor": {
+      "pages": 266,
+      "bpb": 0.4688,
+      "gap": -0.0963,
+      "gap_ci95": [
+       -0.0999,
+       -0.0931
+      ]
+     }
+    },
+    "pothana-sp-base-300M": {
+     "label": "Pothana sp-base-300M",
+     "params": "387M unique",
+     "pages": 416,
+     "bpb": 0.4623,
+     "bpb_ci95": [
+      0.4555,
+      0.4689
+     ],
+     "gap": -0.1017,
+     "gap_ci95": [
+      -0.105,
+      -0.0986
+     ],
+     "without_top_editor": {
+      "pages": 266,
+      "bpb": 0.4783,
+      "gap": -0.1058,
+      "gap_ci95": [
+       -0.1106,
+       -0.1013
+      ]
+     }
+    },
+    "gemma-3-1b-pt": {
+     "label": "Gemma-3-1B",
+     "params": "1.0B",
+     "pages": 416,
+     "bpb": 0.4836,
+     "bpb_ci95": [
+      0.4745,
+      0.4928
+     ],
+     "gap": -0.123,
+     "gap_ci95": [
+      -0.1268,
+      -0.1193
+     ],
+     "without_top_editor": {
+      "pages": 266,
+      "bpb": 0.4986,
+      "gap": -0.126,
+      "gap_ci95": [
+       -0.1315,
+       -0.1209
+      ]
+     }
+    },
+    "qwen3.5-0.8b-base": {
+     "label": "Qwen3.5-0.8B-Base",
+     "params": "0.87B",
+     "pages": 416,
+     "bpb": 0.584,
+     "bpb_ci95": [
+      0.5767,
+      0.5909
+     ],
+     "gap": -0.2234,
+     "gap_ci95": [
+      -0.228,
+      -0.2189
+     ],
+     "without_top_editor": {
+      "pages": 266,
+      "bpb": 0.5929,
+      "gap": -0.2204,
+      "gap_ci95": [
+       -0.2267,
+       -0.2147
+      ]
+     }
+    },
+    "gemma-3-270m": {
+     "label": "Gemma-3-270m",
+     "params": "268M",
+     "pages": 416,
+     "bpb": 0.5848,
+     "bpb_ci95": [
+      0.5754,
+      0.5943
+     ],
+     "gap": -0.2241,
+     "gap_ci95": [
+      -0.2283,
+      -0.2201
+     ],
+     "without_top_editor": {
+      "pages": 266,
+      "bpb": 0.6019,
+      "gap": -0.2294,
+      "gap_ci95": [
+       -0.235,
+       -0.224
+      ]
+     }
+    },
+    "qwen3-0.6b-base": {
+     "label": "Qwen3-0.6B-Base",
+     "params": "0.6B",
+     "pages": 416,
+     "bpb": 0.6922,
+     "bpb_ci95": [
+      0.685,
+      0.6992
+     ],
+     "gap": -0.3316,
+     "gap_ci95": [
+      -0.336,
+      -0.3272
+     ],
+     "without_top_editor": {
+      "pages": 266,
+      "bpb": 0.7001,
+      "gap": -0.3276,
+      "gap_ci95": [
+       -0.3337,
+       -0.3216
+      ]
+     }
+    },
+    "gpt-2-telugu1": {
+     "label": "gpt-2-telugu1",
+     "params": "98M",
+     "pages": 416,
+     "bpb": 0.7858,
+     "bpb_ci95": [
+      0.7736,
+      0.7971
+     ],
+     "gap": -0.4251,
+     "gap_ci95": [
+      -0.4363,
+      -0.4144
+     ],
+     "without_top_editor": {
+      "pages": 266,
+      "bpb": 0.7742,
+      "gap": -0.4017,
+      "gap_ci95": [
+       -0.4163,
+       -0.3885
+      ]
+     }
+    },
+    "lfm2.5-230m-base": {
+     "label": "LFM2.5-230M-Base",
+     "params": "230M",
+     "pages": 416,
+     "bpb": 1.7087,
+     "bpb_ci95": [
+      1.7007,
+      1.7163
+     ],
+     "gap": -1.3481,
+     "gap_ci95": [
+      -1.355,
+      -1.3407
+     ],
+     "without_top_editor": {
+      "pages": 266,
+      "bpb": 1.7072,
+      "gap": -1.3346,
+      "gap_ci95": [
+       -1.3424,
+       -1.3266
+      ]
+     }
+    },
+    "sarvam-1": {
+     "label": "Sarvam-1",
+     "params": "2.5B",
+     "pages": 416,
+     "bpb": 0.356,
+     "bpb_ci95": [
+      0.3508,
+      0.3613
+     ],
+     "gap": 0.0047,
+     "gap_ci95": [
+      -0.0006,
+      0.0097
+     ],
+     "without_top_editor": {
+      "pages": 266,
+      "bpb": 0.3606,
+      "gap": 0.0119,
+      "gap_ci95": [
+       0.0041,
+       0.0191
+      ]
+     }
+    }
+   }
+  },
+  "te-2026-10b": {
+   "pages_created": [
+    "2026-10-23",
+    "2026-10-26"
+   ],
+   "role": "newer set, fixed before training",
+   "pages": 29,
+   "bytes": 285496,
+   "editors": 9,
+   "top_editor_pages": 16,
+   "models": {
+    "vemana": {
+     "label": "Vemana",
+     "params": "278.2M",
+     "pages": 29,
+     "bpb": 0.3458,
+     "bpb_ci95": [
+      0.3107,
+      0.3717
+     ]
+    },
+    "nanochat-telugu-560M": {
+     "label": "nanochat-telugu-560M",
+     "params": "561M",
+     "pages": 29,
+     "bpb": 0.3636,
+     "bpb_ci95": [
+      0.3299,
+      0.3883
+     ],
+     "gap": -0.0179,
+     "gap_ci95": [
+      -0.0214,
+      -0.0147
+     ]
+    },
+    "dhee-pravega-og-atom": {
+     "label": "Dhee-Pravega-OG Atom",
+     "params": "645.6M",
+     "pages": 29,
+     "bpb": 0.3708,
+     "bpb_ci95": [
+      0.3359,
+      0.3975
+     ],
+     "gap": -0.025,
+     "gap_ci95": [
+      -0.0296,
+      -0.0218
+     ]
+    },
+    "pothana-base-v2-225M": {
+     "label": "Pothana Base v2",
+     "params": "222M unique (370M unrolled)",
+     "pages": 29,
+     "bpb": 0.4246,
+     "bpb_ci95": [
+      0.3873,
+      0.4542
+     ],
+     "gap": -0.0788,
+     "gap_ci95": [
+      -0.0881,
+      -0.0687
+     ],
+     "covered_text": {
+      "bpb": 0.4105,
+      "bpb_ci95": [
+       0.3717,
+       0.4408
+      ],
+      "bytes_hidden_share": 0.0406,
+      "gap": -0.0647,
+      "gap_ci95": [
+       -0.074,
+       -0.055
+      ]
+     }
+    },
+    "goldfish-tel-telu-1000mb": {
+     "label": "Goldfish Telugu 1000mb",
+     "params": "125M",
+     "pages": 29,
+     "bpb": 0.4354,
+     "bpb_ci95": [
+      0.4005,
+      0.464
+     ],
+     "gap": -0.0896,
+     "gap_ci95": [
+      -0.0971,
+      -0.0834
+     ]
+    },
+    "gemma-3-1b-pt": {
+     "label": "Gemma-3-1B",
+     "params": "1.0B",
+     "pages": 29,
+     "bpb": 0.4413,
+     "bpb_ci95": [
+      0.3947,
+      0.4774
+     ],
+     "gap": -0.0955,
+     "gap_ci95": [
+      -0.1081,
+      -0.0804
+     ]
+    },
+    "sarvam-1": {
+     "label": "Sarvam-1",
+     "params": "2.5B",
+     "pages": 29,
+     "bpb": 0.3365,
+     "bpb_ci95": [
+      0.3129,
+      0.3591
+     ],
+     "gap": 0.0093,
+     "gap_ci95": [
+      -0.0089,
+      0.0223
+     ]
+    }
+   }
+  },
+  "te-2026-summer": {
+   "pages_created": [
+    "2026-07-01",
+    "2026-08-31"
+   ],
+   "role": "supplementary, larger",
+   "pages": 477,
+   "bytes": 6001285,
+   "editors": 33,
+   "top_editor_pages": 210,
+   "models": {
+    "vemana": {
+     "label": "Vemana",
+     "params": "278.2M",
+     "pages": 477,
+     "bpb": 0.3854,
+     "bpb_ci95": [
+      0.3793,
+      0.3915
+     ]
+    },
+    "nanochat-telugu-560M": {
+     "label": "nanochat-telugu-560M",
+     "params": "561M",
+     "pages": 477,
+     "bpb": 0.4082,
+     "bpb_ci95": [
+      0.4022,
+      0.4143
+     ],
+     "gap": -0.0227,
+     "gap_ci95": [
+      -0.0237,
+      -0.0217
+     ]
+    },
+    "dhee-pravega-og-atom": {
+     "label": "Dhee-Pravega-OG Atom",
+     "params": "645.6M",
+     "pages": 477,
+     "bpb": 0.414,
+     "bpb_ci95": [
+      0.408,
+      0.4202
+     ],
+     "gap": -0.0286,
+     "gap_ci95": [
+      -0.0296,
+      -0.0275
+     ]
+    },
+    "pothana-base-v2-225M": {
+     "label": "Pothana Base v2",
+     "params": "222M unique (370M unrolled)",
+     "pages": 477,
+     "bpb": 0.4565,
+     "bpb_ci95": [
+      0.4507,
+      0.4623
+     ],
+     "gap": -0.071,
+     "gap_ci95": [
+      -0.0728,
+      -0.0692
+     ],
+     "covered_text": {
+      "bpb": 0.4438,
+      "bpb_ci95": [
+       0.4378,
+       0.4498
+      ],
+      "bytes_hidden_share": 0.039,
+      "gap": -0.0584,
+      "gap_ci95": [
+       -0.06,
+       -0.0566
+      ]
+     }
+    },
+    "goldfish-tel-telu-1000mb": {
+     "label": "Goldfish Telugu 1000mb",
+     "params": "125M",
+     "pages": 477,
+     "bpb": 0.4801,
+     "bpb_ci95": [
+      0.4736,
+      0.4865
+     ],
+     "gap": -0.0947,
+     "gap_ci95": [
+      -0.0965,
+      -0.0928
+     ]
+    },
+    "gemma-3-1b-pt": {
+     "label": "Gemma-3-1B",
+     "params": "1.0B",
+     "pages": 477,
+     "bpb": 0.5021,
+     "bpb_ci95": [
+      0.4948,
+      0.5092
+     ],
+     "gap": -0.1166,
+     "gap_ci95": [
+      -0.1196,
+      -0.1135
+     ]
+    },
+    "sarvam-1": {
+     "label": "Sarvam-1",
+     "params": "2.5B",
+     "pages": 477,
+     "bpb": 0.365,
+     "bpb_ci95": [
+      0.3601,
+      0.3698
+     ],
+     "gap": 0.0205,
+     "gap_ci95": [
+      0.0173,
+      0.0235
+     ]
+    }
+   }
+  }
+ },
+ "rules": {
+  "A_under_300M": {
+   "rule": "Vemana <= 0.406 and paired 95% interval of (Vemana - Pothana v2, its better score) below zero",
+   "pass": true,
+   "vemana_bpb": 0.3606,
+   "pothana_v2_covered_bpb": 0.4264,
+   "gap": -0.0657,
+   "gap_ci95": [
+    -0.0674,
+    -0.0641
+   ]
+  },
+  "B_under_1B": {
+   "rule": "B - Vemana >= 0.02 with the interval below zero; below zero also at window 512, without the top editor, and on te-2026-10b",
+   "pass": true,
+   "B_model": "nanochat-telugu-560M",
+   "B": 0.3831,
+   "vemana_bpb": 0.3606,
+   "margin": 0.0224,
+   "gap": -0.0224,
+   "gap_ci95": [
+    -0.0239,
+    -0.021
+   ],
+   "robustness": {
+    "ctx512": {
+     "gap": -0.0173,
+     "gap_ci95": [
+      -0.0186,
+      -0.0159
+     ],
+     "pages": 416
+    },
+    "without_top_editor": {
+     "gap": -0.0235,
+     "gap_ci95": [
+      -0.0258,
+      -0.0214
+     ],
+     "pages": 266
+    },
+    "newer_set_fresh_b": {
+     "gap": -0.0179,
+     "gap_ci95": [
+      -0.0214,
+      -0.0147
+     ],
+     "pages": 29
+    }
+   }
+  }
+ }
+}
