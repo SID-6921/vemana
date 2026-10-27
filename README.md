@@ -31,6 +31,12 @@ print(tok.decode(out[0], skip_special_tokens=True))
 Needs transformers 5.19 or newer (Gemma 4 text layout). Keep prompt and output within 1,024 tokens, the length it was
 trained at (about 570 Telugu words). On a Mac mini's CPU it writes about 65 tokens per second.
 
+**Run it on your own device:** in a web browser at [udgamlabs.com/models/vemana](https://udgamlabs.com/models/vemana#try) (the 297 MB model downloads once; text never leaves the device), or with llama.cpp from [udgamlabs/Vemana-Base-GGUF](https://huggingface.co/udgamlabs/Vemana-Base-GGUF):
+
+```bash
+llama-completion -hf udgamlabs/Vemana-Base-GGUF:Q8_0 -p "వర్షాకాలంలో" -n 80 --temp 0.8 --top-p 0.95 -c 1024
+```
+
 **Reproduce the main number** with the code in [`eval/`](./eval) (details and the other two sets in
 [eval/README.md](./eval/README.md)):
 
@@ -57,6 +63,8 @@ edited or deleted since we built them on 23 and 27 October 2026).
 | `eval/make_nopunct.py` | The punctuation-free copy of a set used for one of the checks |
 | `results/release-gate-2026-10-27.md` | The release-gate summary: every model, set, check and multiple-choice test |
 | `results/fresh-text-2026-10-27.json` | The headline numbers per model and set, machine-readable |
+| `gguf/` | Rebuilds and checks the GGUF files for llama.cpp ([udgamlabs/Vemana-Base-GGUF](https://huggingface.co/udgamlabs/Vemana-Base-GGUF)) |
+| `browser/` | Runs Vemana inside a web page (llama.cpp as WebAssembly); the same engine as on udgamlabs.com |
 
 The test texts are not included (Telugu Wikipedia is CC BY-SA 4.0); `build_te.py` rebuilds them.
 

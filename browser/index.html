@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vemana in your browser · Udgam Labs</title>
+<meta name="description" content="Vemana, a 278M Telugu model trained from scratch, running entirely on your device.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500&family=Figtree:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+Telugu:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --ink:#1C1B18; --graphite:#5E5C57; --rule:#E6E3DC; --surface:#F7F5F0; --bg:#FFFFFF; --muted:#8F8A7E; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.55 Figtree, system-ui, sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 32px 16px 48px; }
+  .eyebrow { font: 500 12px/1 "IBM Plex Mono", monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--graphite); }
+  h1 { font: 500 40px/1.1 Outfit, sans-serif; margin: 10px 0 8px; }
+  .lede { color: #34332F; margin: 0 0 20px; }
+  .panel { border: 1px solid var(--rule); background: var(--bg); }
+  .loadbox { padding: 20px; background: var(--surface); border-bottom: 1px solid var(--rule); }
+  .bar { height: 4px; background: var(--rule); margin-top: 12px; }
+  .bar > div { height: 100%; width: 0; background: var(--ink); transition: width .2s; }
+  .status, .meta { font: 13px "IBM Plex Mono", monospace; color: var(--graphite); margin-top: 8px; }
+  button { font: 500 15px Figtree, sans-serif; border: 1px solid var(--ink); background: var(--ink); color: #F3EFE6; padding: 10px 16px; cursor: pointer; border-radius: 0; }
+  button.secondary { background: var(--bg); color: var(--ink); }
+  button:disabled { opacity: .45; cursor: default; }
+  .te { font-family: "Noto Sans Telugu", Figtree, sans-serif; }
+  textarea { width: 100%; font: 17px/1.6 "Noto Sans Telugu", Figtree, sans-serif; border: 1px solid var(--rule); padding: 10px; resize: vertical; min-height: 64px; border-radius: 0; }
+  .work { padding: 16px 20px; display: grid; gap: 12px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { font: 15px "Noto Sans Telugu", Figtree, sans-serif; background: var(--bg); color: var(--ink); border: 1px solid var(--rule); padding: 6px 10px; }
+  .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  #out { white-space: pre-wrap; word-wrap: break-word; min-height: 120px; border-top: 1px solid var(--rule); padding-top: 12px; font: 17px/1.7 "Noto Sans Telugu", Figtree, sans-serif; }
+  #out b { font-weight: 500; }
+  .note { font-size: 14px; color: var(--graphite); margin-top: 16px; }
+  footer { margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--rule); font-size: 14px; color: var(--graphite); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  a { color: var(--ink); }
+  @media (max-width: 520px) { h1 { font-size: 32px; } }
+</style>
+</head>
+<body>
+<main>
+  <div class="eyebrow">Udgam Labs · Language model · Runs on your device</div>
+  <h1>Vemana in your browser</h1>
+  <p class="lede">Vemana is a 278M-parameter Telugu language model trained from scratch. Here it runs entirely inside this
+    tab: the 297 MB model downloads once and is kept by your browser, and your text never leaves your device. It is a base
+    model: give it the start of some Telugu text and it writes on.</p>
+
+  <div class="panel">
+    <div class="loadbox" id="loadbox">
+      <button id="load">Download Vemana (297 MB) and start</button>
+      <div class="bar"><div id="bar"></div></div>
+      <div class="status" id="status">Works best on a laptop or a recent phone with a good connection.</div>
+    </div>
+    <div class="work" id="work" hidden>
+      <div class="chips" id="chips"></div>
+      <label for="prompt" class="eyebrow">Start of the text</label>
+      <textarea id="prompt" class="te" lang="te">వర్షాకాలంలో</textarea>
+      <div class="actions">
+        <button id="go">Continue</button>
+        <button id="stop" class="secondary" disabled>Stop</button>
+      </div>
+      <div id="out" lang="te" aria-live="polite"></div>
+      <div class="meta" id="meta"></div>
+    </div>
+  </div>
+
+  <p class="note">Vemana continues text; it does not answer questions or follow instructions, and it makes things up.
+    Sampling: temperature 0.8, top-p 0.95, up to 160 new tokens.</p>
+  <footer>
+    <span>Vemana by Udgam Labs · <a href="https://huggingface.co/udgamlabs/Vemana-Base">model card</a></span>
+    <span>Udgam Labs · AI research from first principles</span>
+  </footer>
+</main>
+<script type="module">
+import { VemanaComplete, MODEL_URL } from "./vemana-complete.js";
+const $ = (id) => document.getElementById(id);
+const v = new VemanaComplete();
+const params = new URLSearchParams(location.search);
+const modelUrl = params.get("model") || MODEL_URL;
+const EXAMPLES = ["వర్షాకాలంలో", "కంప్యూటర్ అనేది", "తెలుగు భాష", "ఒక రోజు ఒక రైతు"];
+for (const e of EXAMPLES) {
+  const b = document.createElement("button"); b.className = "chip"; b.textContent = e; b.type = "button";
+  b.onclick = () => { $("prompt").value = e; }; $("chips").appendChild(b);
+}
+const esc = (s) => s.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+$("load").onclick = async () => {
+  $("load").disabled = true; $("status").textContent = "Downloading…";
+  try {
+    const info = await v.load(modelUrl, (l, t) => {
+      $("bar").style.width = `${Math.round(100 * l / (t || 1))}%`;
+      $("status").textContent = `Downloading ${(l / 1e6).toFixed(0)} of ${(t / 1e6).toFixed(0)} MB`;
+    });
+    $("status").textContent = `Ready · ${info.multithread ? "multi-threaded" : "single-threaded"}`;
+    $("work").hidden = false; window.__vemana = v;
+  } catch (e) {
+    $("status").textContent = `Could not load the model: ${e.message || e}`; $("load").disabled = false;
+  }
+};
+$("go").onclick = async () => {
+  const p = $("prompt").value.trim(); if (!p) return;
+  $("go").disabled = true; $("stop").disabled = false; $("meta").textContent = "";
+  try {
+    const r = await v.complete(p, (t) => { $("out").innerHTML = `<b>${esc(p)}</b>${esc(t)}`; });
+    $("meta").textContent = `${r.tokensPerSecond.toFixed(1)} tokens/s · ${r.seconds.toFixed(1)} s`;
+  } catch (e) {
+    $("meta").textContent = `Error: ${e.message || e}`;
+  }
+  $("go").disabled = false; $("stop").disabled = true;
+};
+$("stop").onclick = () => v.stop();
+</script>
+</body>
+</html>
