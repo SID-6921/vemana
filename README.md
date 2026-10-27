@@ -12,7 +12,7 @@ model; measured by Udgam Labs on 27 October 2026). It continues Telugu text; it 
 a laptop-class CPU. It is meant as a base for research and for building Telugu tools. This repository holds the code to
 rebuild the test and score any model on it, and the release-gate results; the weights are on Hugging Face.
 
-[Model card](https://huggingface.co/udgamlabs/Vemana-Base) · [Try it](https://huggingface.co/spaces/udgamlabs/Vemana) · [Every checkpoint](https://huggingface.co/udgamlabs/Vemana-Checkpoints) · [udgamlabs.com/models/vemana](https://udgamlabs.com/models/vemana) · [Trained live](https://udgamlabs.com/live/vemana)
+[Model card](https://huggingface.co/udgamlabs/Vemana-Base) · [Try it](https://huggingface.co/spaces/udgamlabs/Vemana) · [Every checkpoint](https://huggingface.co/udgamlabs/Vemana-Checkpoints) · [Technical report](https://udgamlabs.com/research/vemana) · [udgamlabs.com/models/vemana](https://udgamlabs.com/models/vemana) · [Trained live](https://udgamlabs.com/live/vemana)
 
 ## Get started
 
@@ -65,6 +65,7 @@ edited or deleted since we built them on 23 and 27 October 2026).
 | `results/fresh-text-2026-10-27.json` | The headline numbers per model and set, machine-readable |
 | `gguf/` | Rebuilds and checks the GGUF files for llama.cpp ([udgamlabs/Vemana-Base-GGUF](https://huggingface.co/udgamlabs/Vemana-Base-GGUF)) |
 | `browser/` | Runs Vemana inside a web page (llama.cpp as WebAssembly); the same engine as on udgamlabs.com |
+| `docs/REPORT.pdf` | The technical report: data, tokenizer, model, training run, the test and its rules, every result, where it falls short ([web](https://udgamlabs.com/research/vemana)) |
 
 The test texts are not included (Telugu Wikipedia is CC BY-SA 4.0); `build_te.py` rebuilds them.
 
